@@ -107,6 +107,38 @@ def getHankelMatrices(x,NumRows,NumCols,blockWidth=1):
     return XPast,XFuture
 
 def N4SID(u,y,NumRows,NumCols,NSig):
+    """
+    A,B,C,D,Cov,Sigma = N4SID(u,y,NumRows,NumCols,n)
+
+    Let NumVals be the number of input and output values available
+    In this case:
+
+    u - NumInputs x NumVals array of inputs
+    y - NumOutputs x NumVals array of outputs
+
+    NumRows - Number of block rows in the past and future block Hankel matrices
+    NumCols - Number of columns in the past and future block Hankel matrices
+
+    n - desired state dimension.
+
+    For the algorithm to work, you must have:
+
+    NumVals >= 2*NumRows + NumCols - 1
+
+    Returns
+
+    A,B,C,D - the state space realization from inputs to outputs
+    
+    Cov - the joint covariance of the process and measurement noise
+
+    Sigma - the singular values of the oblique projection of 
+            row space of future outputs along row space of 
+            future inputs on the row space of past inputs and outputs.
+            
+            Examining Sigma can be used to determine the required state 
+            dimension
+
+    """
     NumInputs = u.shape[0]
     NumOutputs = y.shape[0]
     
